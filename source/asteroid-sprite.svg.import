@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/asteroid-sprite.svg-0e766ce8ed199d2511633fba618c6165.stex"
+path="res://.import/asteroid-sprite.svg-574272e5155899b38de4dbd906842c9f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Spaces-Bodies/asteroid-sprite.svg"
-dest_files=[ "res://.import/asteroid-sprite.svg-0e766ce8ed199d2511633fba618c6165.stex" ]
+source_file="res://asteroid-sprite.svg"
+dest_files=[ "res://.import/asteroid-sprite.svg-574272e5155899b38de4dbd906842c9f.stex" ]
 
 [params]
 
