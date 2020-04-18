@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://2.Mechanics/ObjectPull.tscn" type="PackedScene" id=1]
+[ext_resource path="res://2.Mechanics/OrbitCenter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Spaces-Bodies/Moon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Spaces-Bodies/Asteroid.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Spaces-Bodies/Earth.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Spaces-Bodies/Saturn.tscn" type="PackedScene" id=6]
+
+[node name="Game" type="Node"]
+
+[node name="ObjectPull" parent="." instance=ExtResource( 1 )]
+
+[node name="Orbit" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+space_object_scene = ExtResource( 3 )
+
+[node name="Orbit2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+space_object_scene = ExtResource( 4 )
+
+[node name="Orbit3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+space_object_scene = ExtResource( 4 )
+
+[node name="Orbit4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+space_object_scene = ExtResource( 6 )
+
+[node name="Orbit5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+space_object_scene = ExtResource( 5 )
