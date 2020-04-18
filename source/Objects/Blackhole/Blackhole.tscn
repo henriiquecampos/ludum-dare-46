@@ -1,0 +1,151 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Objects/Blackhole/TwirlShader.tres" type="Material" id=1]
+[ext_resource path="res://Objects/Blackhole/Puller.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/Blackhole/blackhole.svg" type="Texture" id=3]
+[ext_resource path="res://Objects/Blackhole/star.svg" type="Texture" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+
+export(PackedScene) var puller_scene
+
+
+func _on_area_entered(area: Area2D) -> void:
+	var sprite = area.get_node(\"Sprite\").duplicate()
+	var puller = puller_scene.instance()
+	add_child(puller)
+	sprite.position = to_local(area.global_position)
+	puller.pull(sprite)
+	area.queue_free()
+"
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 130.231
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.778481, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 1
+emission_sphere_radius = 100.0
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = -0.3
+orbit_velocity_random = 0.0
+radial_accel = -250.0
+radial_accel_random = 0.5
+scale = 0.4
+scale_curve = SubResource( 4 )
+
+[sub_resource type="Animation" id=6]
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, -2 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="ViewportTexture" id=8]
+viewport_path = NodePath("Viewport")
+
+[node name="Blackhole" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+rotation = -0.778076
+collision_layer = 0
+script = SubResource( 1 )
+puller_scene = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 200, 200 )
+own_world = true
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+disable_3d = true
+usage = 0
+render_target_v_flip = true
+
+[node name="Particles2D" type="Particles2D" parent="Viewport"]
+position = Vector2( 100, 100 )
+amount = 12
+preprocess = 1.0
+process_material = SubResource( 5 )
+texture = ExtResource( 4 )
+
+[node name="EventHorizon" type="Node2D" parent="."]
+scale = Vector2( 1.07907, 1.07907 )
+z_index = -1
+
+[node name="Sprite" type="Sprite" parent="EventHorizon"]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 6, 10, 233, 234 )
+
+[node name="Sprite2" type="Sprite" parent="EventHorizon"]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 322, 51, 181, 182 )
+
+[node name="Sprite3" type="Sprite" parent="EventHorizon"]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 10, 369, 132, 133 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EventHorizon"]
+autoplay = "Pulse"
+anims/Pulse = SubResource( 6 )
+
+[node name="SpiningLight" type="Sprite" parent="."]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
+rotation = 2.12595
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 341, 303, 160, 202 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpiningLight"]
+autoplay = "Spin"
+anims/Spin = SubResource( 7 )
+
+[node name="Stars" type="Sprite" parent="."]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
+material = ExtResource( 1 )
+texture = SubResource( 8 )
+
+[node name="Hole" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 217, 268, 64, 65 )
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

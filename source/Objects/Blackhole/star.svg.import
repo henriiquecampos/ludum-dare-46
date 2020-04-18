@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planets.svg-0604b41361ba5f3566580fce355d4969.stex"
+path="res://.import/star.svg-d049bc9ce91e6e137a7000edb4c06214.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://planets.svg"
-dest_files=[ "res://.import/planets.svg-0604b41361ba5f3566580fce355d4969.stex" ]
+source_file="res://Objects/Blackhole/star.svg"
+dest_files=[ "res://.import/star.svg-d049bc9ce91e6e137a7000edb4c06214.stex" ]
 
 [params]
 

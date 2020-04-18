@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://2.Mechanics/ObjectPull.tscn" type="PackedScene" id=1]
 [ext_resource path="res://2.Mechanics/OrbitCenter.tscn" type="PackedScene" id=2]
@@ -6,8 +6,11 @@
 [ext_resource path="res://Spaces-Bodies/Asteroid.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Spaces-Bodies/Earth.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Spaces-Bodies/Saturn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Blackhole/Blackhole.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Game.gd" type="Script" id=8]
 
 [node name="Game" type="Node"]
+script = ExtResource( 8 )
 
 [node name="ObjectPull" parent="." instance=ExtResource( 1 )]
 
@@ -30,3 +33,6 @@ space_object_scene = ExtResource( 6 )
 [node name="Orbit5" parent="." instance=ExtResource( 2 )]
 position = Vector2( 512, 300 )
 space_object_scene = ExtResource( 5 )
+
+[node name="Blackhole" parent="." instance=ExtResource( 7 )]
+position = Vector2( 512, 304 )
