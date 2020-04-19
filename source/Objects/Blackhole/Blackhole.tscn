@@ -1,23 +1,28 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Objects/Blackhole/TwirlShader.tres" type="Material" id=1]
 [ext_resource path="res://Objects/Blackhole/Puller.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/Blackhole/blackhole.svg" type="Texture" id=3]
 [ext_resource path="res://Objects/Blackhole/star.svg" type="Texture" id=4]
+[ext_resource path="res://Objects/Blackhole/Blackhole.gd" type="Script" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Area2D
 
+signal absorbed(mass)
+
 export(PackedScene) var puller_scene
 
-
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(area):
 	var sprite = area.get_node(\"Sprite\").duplicate()
 	var puller = puller_scene.instance()
+	var mass = area.mass
 	add_child(puller)
 	sprite.position = to_local(area.global_position)
 	puller.pull(sprite)
 	area.queue_free()
+#	yield(get_tree().create_timer(puller.duration), \"timeout\")
+	emit_signal(\"absorbed\", mass)
 "
 
 [sub_resource type="CircleShape2D" id=2]
@@ -40,6 +45,9 @@ radial_accel = -250.0
 radial_accel_random = 0.5
 scale = 0.4
 scale_curve = SubResource( 4 )
+
+[sub_resource type="ViewportTexture" id=8]
+viewport_path = NodePath("Viewport")
 
 [sub_resource type="Animation" id=6]
 loop = true
@@ -72,10 +80,8 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="ViewportTexture" id=8]
-viewport_path = NodePath("Viewport")
-
 [node name="Blackhole" type="Node2D"]
+script = ExtResource( 5 )
 
 [node name="Area2D" type="Area2D" parent="."]
 rotation = -0.778076
@@ -103,49 +109,55 @@ preprocess = 1.0
 process_material = SubResource( 5 )
 texture = ExtResource( 4 )
 
-[node name="EventHorizon" type="Node2D" parent="."]
+[node name="Stars" type="Sprite" parent="."]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
+material = ExtResource( 1 )
+texture = SubResource( 8 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="EventHorizon" type="Node2D" parent="Sprites"]
 scale = Vector2( 1.07907, 1.07907 )
 z_index = -1
 
-[node name="Sprite" type="Sprite" parent="EventHorizon"]
+[node name="Sprite" type="Sprite" parent="Sprites/EventHorizon"]
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 6, 10, 233, 234 )
 
-[node name="Sprite2" type="Sprite" parent="EventHorizon"]
+[node name="Sprite2" type="Sprite" parent="Sprites/EventHorizon"]
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 322, 51, 181, 182 )
 
-[node name="Sprite3" type="Sprite" parent="EventHorizon"]
+[node name="Sprite3" type="Sprite" parent="Sprites/EventHorizon"]
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 10, 369, 132, 133 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EventHorizon"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprites/EventHorizon"]
 autoplay = "Pulse"
 anims/Pulse = SubResource( 6 )
 
-[node name="SpiningLight" type="Sprite" parent="."]
+[node name="SpiningLight" type="Sprite" parent="Sprites"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
 rotation = 2.12595
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 341, 303, 160, 202 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SpiningLight"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprites/SpiningLight"]
 autoplay = "Spin"
 anims/Spin = SubResource( 7 )
 
-[node name="Stars" type="Sprite" parent="."]
-modulate = Color( 1.2, 1.2, 1.2, 1 )
-material = ExtResource( 1 )
-texture = SubResource( 8 )
-
-[node name="Hole" type="Sprite" parent="."]
+[node name="Hole" type="Sprite" parent="Sprites"]
 z_index = 1
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 217, 268, 64, 65 )
+[connection signal="absorbed" from="Area2D" to="." method="_on_Area2D_absorbed"]
 [connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
