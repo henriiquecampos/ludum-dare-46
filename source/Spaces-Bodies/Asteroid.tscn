@@ -4,7 +4,7 @@
 [ext_resource path="res://Spaces-Bodies/asteroid-sprite.svg" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.0
+radius = 64.4981
 
 [node name="SpaceBody" instance=ExtResource( 1 )]
 pulls_required = 4

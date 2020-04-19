@@ -13,7 +13,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-next_scene = "res://Spaces-Bodies/Earth.tscn"
+next_scene = "res://Game.tscn"
 
 [node name="ButtonStart" type="Button" parent="."]
 anchor_left = 0.5

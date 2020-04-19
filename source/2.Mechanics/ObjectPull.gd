@@ -1,16 +1,8 @@
 extends Node
 
 
-var pulls = 0
 var initial_position = Vector2.ZERO
 onready var tween = $Tween
-
-func _ready() -> void:
-	Selection.connect("selection_changed", self, "_on_Selection_selection_changed")
-
-
-func _on_Selection_selection_changed(new_object):
-	pulls = 0
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -28,9 +20,9 @@ func pull():
 	
 	var space_object = Selection.current_selection
 	
-	var target_position = Vector2.ZERO + (space_object.offset * space_object.pulls_required)
 	space_object.pulls_required -= 1
 	space_object.pulls_required = max(0, space_object.pulls_required)
+	var target_position = Vector2.ZERO + (space_object.offset * space_object.pulls_required)
 	
 	
 	tween.interpolate_property(
