@@ -15,8 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Cosmeater"
-run/main_scene="res://Screens/MainMenu.tscn"
+config/name="Souce"
 config/icon="res://icon.png"
 
 [autoload]
@@ -46,5 +45,4 @@ pull={
 
 [rendering]
 
-environment/default_clear_color=Color( 0.196078, 0.160784, 0.278431, 1 )
 environment/default_environment="res://default_env.tres"
