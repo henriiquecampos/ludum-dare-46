@@ -2,10 +2,10 @@
 
 [ext_resource path="res://2.Mechanics/ObjectPull.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Blackhole/star.svg" type="Texture" id=2]
-[ext_resource path="res://Spaces-Bodies/Moon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Spaces-Bodies/Asteroid.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Spaces-Bodies/Earth.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Spaces-Bodies/Saturn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Spaces-Bodies/Moon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Objects/Spaces-Bodies/Asteroid.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Spaces-Bodies/Earth.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Spaces-Bodies/Saturn.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/Blackhole/Blackhole.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Game.gd" type="Script" id=8]
 [ext_resource path="res://2.Mechanics/OrbitCenter.tscn" type="PackedScene" id=9]
@@ -71,3 +71,4 @@ position = Vector2( 641.594, 608.821 )
 space_object_scene = ExtResource( 6 )
 
 [node name="Control" parent="." instance=ExtResource( 10 )]
+[connection signal="mass_depleated" from="Blackhole" to="." method="_on_Blackhole_mass_depleated"]

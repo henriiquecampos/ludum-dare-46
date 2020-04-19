@@ -46,10 +46,10 @@ radial_accel_random = 0.5
 scale = 0.4
 scale_curve = SubResource( 4 )
 
-[sub_resource type="ViewportTexture" id=8]
+[sub_resource type="ViewportTexture" id=6]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -65,7 +65,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -82,6 +82,7 @@ tracks/0/keys = {
 
 [node name="Blackhole" type="Node2D"]
 script = ExtResource( 5 )
+loss_per_second = 0.5
 
 [node name="Area2D" type="Area2D" parent="."]
 rotation = -0.778076
@@ -112,7 +113,7 @@ texture = ExtResource( 4 )
 [node name="Stars" type="Sprite" parent="."]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
 material = ExtResource( 1 )
-texture = SubResource( 8 )
+texture = SubResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -139,7 +140,7 @@ region_rect = Rect2( 10, 369, 132, 133 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprites/EventHorizon"]
 autoplay = "Pulse"
-anims/Pulse = SubResource( 6 )
+anims/Pulse = SubResource( 7 )
 
 [node name="SpiningLight" type="Sprite" parent="Sprites"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
@@ -150,7 +151,7 @@ region_rect = Rect2( 341, 303, 160, 202 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprites/SpiningLight"]
 autoplay = "Spin"
-anims/Spin = SubResource( 7 )
+anims/Spin = SubResource( 8 )
 
 [node name="Hole" type="Sprite" parent="Sprites"]
 z_index = 1

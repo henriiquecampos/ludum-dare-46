@@ -1,14 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://1.Model/SpaceBody.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Spaces-Bodies/planets.svg" type="Texture" id=2]
+[ext_resource path="res://Objects/Spaces-Bodies/planets.svg" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 48.0
+radius = 45.1982
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 62.7062
 
 [node name="SpaceBody" instance=ExtResource( 1 )]
 pulls_required = 9
-mass = 700.0
+mass = 50.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource( 1 )
@@ -18,3 +21,6 @@ scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 36, 22, 356, 356 )
+
+[node name="CollisionShape2D" parent="InputArea2D" index="0"]
+shape = SubResource( 2 )

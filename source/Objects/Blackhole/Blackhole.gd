@@ -1,33 +1,36 @@
 extends Node2D
 
+signal mass_depleated
+
 export (float) var mass = 5000.0 setget set_mass
+export (float) var loss_per_second = 0.01
 
 var scale_ratio = 1.0
 
 onready var tween = $Tween
+onready var shape = $Area2D/CollisionShape2D.shape
+onready var sprites = $Sprites
 onready var _initial_mass = mass
+
+
+func _process(delta):
+	mass -= (mass * loss_per_second) * delta
+	shape.radius -= (shape.radius * loss_per_second) * delta
+	sprites.scale -= (sprites.scale * loss_per_second) * delta
+	mass = max(0, mass)
+	if mass <= 0:
+		set_process(false)
+		emit_signal("mass_depleated")
+
 
 func set_mass(new_mass):
 	mass = new_mass
 	scale_ratio = mass / _initial_mass
-	if tween.is_active():
-		tween.stop_all()
-	tween.interpolate_property(
-		$Sprites,
-		"scale",
-		scale,
-		Vector2.ONE * scale_ratio,
-		1.0,
-		Tween.TRANS_ELASTIC,
-		Tween.EASE_IN
-	)
-	tween.start()
 
 
 func _on_Area2D_absorbed(object_mass):
 	self.mass += object_mass
 
 
-
 func _on_Tween_tween_completed(object, key):
-	$Area2D/CollisionShape2D.shape.radius *= scale_ratio
+	shape.radius *= scale_ratio
